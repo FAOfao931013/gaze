@@ -7,6 +7,7 @@ const isProduction = process.env.NODE_ENV === 'production'
 export default defineConfig({
   ...(isProduction && {
     site: 'https://2eha0.github.io',
+    base: '/gaze',
   }),
   integrations: [react()],
   vite: {
