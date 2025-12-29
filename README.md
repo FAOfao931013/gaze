@@ -43,6 +43,10 @@ bun run build
 bun run preview
 ```
 
+### Deployment
+
+See the [Deployment Guide](docs/DEPLOYMENT.md) for instructions on deploying to GitHub Pages.
+
 ## Data Harvesting
 
 The project uses a **data harvest script** (`scripts/harvest.ts`) to fetch data from APIs:
