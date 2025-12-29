@@ -20,6 +20,12 @@ export const gazeConfig: GazeConfig = {
               location: 'San Francisco',
               apiKey: process.env.WEATHER_API_KEY,
             },
+            {
+              type: 'rss',
+              title: 'YC News',
+              feedUrl: 'https://news.ycombinator.com/rss',
+              limit: 5,
+            },
           ],
         },
         {
@@ -27,15 +33,9 @@ export const gazeConfig: GazeConfig = {
           widgets: [
             {
               type: 'rss',
-              title: 'YC News',
-              feedUrl: 'https://news.ycombinator.com/rss',
-              limit: 5,
-            },
-            {
-              type: 'rss',
-              title: 'Hacker News',
-              feedUrl: 'https://hnrss.org/frontpage',
-              limit: 5,
+              title: 'GitHub Trending',
+              feedUrl: 'https://mshibanami.github.io/GitHubTrendingRSS/daily/all.xml',
+              limit: 10,
             },
           ],
         },

@@ -21,6 +21,7 @@ export interface RSSItem {
   link: string
   pubDate: string
   description?: string
+  image?: string // Cover image URL (from enclosure, media:content, or itunes:image)
 }
 
 /**
