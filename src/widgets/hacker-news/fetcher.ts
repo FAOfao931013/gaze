@@ -79,7 +79,7 @@ async function fetchPost(id: number): Promise<HackerNewsPostResponse | null> {
  */
 async function fetchPosts(
   postIds: number[],
-  commentsUrlTemplate: string
+  commentsUrlTemplate: string,
 ): Promise<HackerNewsStory[]> {
   // Fetch posts in parallel (up to 30 concurrent requests like Go version)
   const CONCURRENCY = 30
@@ -134,10 +134,12 @@ function sortByEngagement(stories: HackerNewsStory[]): HackerNewsStory[] {
 }
 
 export const hackerNewsFetcher: WidgetFetcher<HackerNewsWidgetConfig, HackerNewsData> = async (
-  config
+  config,
 ) => {
   // Validate and set defaults
-  const sortBy = ['top', 'new', 'best'].includes(config.sortBy || '') ? config.sortBy! : 'top'
+  const sortBy = (['top', 'new', 'best'] as const).includes(config.sortBy as 'top' | 'new' | 'best')
+    ? (config.sortBy as 'top' | 'new' | 'best')
+    : 'top'
   const limit = config.limit && config.limit > 0 ? config.limit : 15
   const commentsUrlTemplate = config.commentsUrlTemplate || ''
 

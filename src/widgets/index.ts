@@ -11,6 +11,7 @@ import { lobstersWidget } from './lobsters'
 import type { LobstersWidgetConfig } from './lobsters/types'
 import { rssWidget } from './rss'
 import type { RSSWidgetConfig } from './rss/types'
+import { splitColumnWidget } from './split-column'
 import { weatherWidget } from './weather'
 import type { WeatherWidgetConfig } from './weather/types'
 import { youtubeWidget } from './youtube'
@@ -26,6 +27,7 @@ export function registerAllWidgets(): void {
   registerWidget('youtube', youtubeWidget)
   registerWidget('lobsters', lobstersWidget)
   registerWidget('hacker-news', hackerNewsWidget)
+  registerWidget('split-column', splitColumnWidget)
 
   console.log('[Widgets] All widgets registered successfully')
 }
@@ -39,14 +41,37 @@ export type { RSSData, RSSItem, RSSWidgetConfig } from './rss'
 export type { YouTubeData, YouTubeVideo, YouTubeWidgetConfig } from './youtube'
 export type { LobstersData, LobstersStory, LobstersWidgetConfig } from './lobsters'
 export type { HackerNewsData, HackerNewsStory, HackerNewsWidgetConfig } from './hacker-news'
+export type { SplitColumnData, SplitColumnWidgetConfigBase } from './split-column'
 
 /**
- * Union type of all registered widget configs
- * This enables type-safe widget configuration with autocomplete
+ * Union type of all registered widget configs (non-container widgets)
  */
-export type WidgetConfigUnion =
+type BaseWidgetConfigUnion =
   | WeatherWidgetConfig
   | RSSWidgetConfig
   | YouTubeWidgetConfig
   | LobstersWidgetConfig
   | HackerNewsWidgetConfig
+
+/**
+ * Split Column Widget Configuration with recursive widget types
+ * Allows nested widgets of any type including other split-columns
+ */
+export interface SplitColumnWidgetConfig {
+  type: 'split-column'
+  title?: string
+  slug?: string
+  hideHeader?: boolean
+  /** Array of child widget configurations to display side by side */
+  widgets: WidgetConfigUnion[]
+  /** Maximum number of columns (default: 2, max: 5) */
+  maxColumns?: number
+  /** Index signature for WidgetConfig compatibility */
+  [key: string]: unknown
+}
+
+/**
+ * Union type of all registered widget configs
+ * This enables type-safe widget configuration with autocomplete
+ */
+export type WidgetConfigUnion = BaseWidgetConfigUnion | SplitColumnWidgetConfig

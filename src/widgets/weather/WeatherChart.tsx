@@ -54,11 +54,13 @@ export function WeatherChart({ data, hideLocation }: WeatherChartProps) {
 
             return (
               <div
-                key={index}
+                key={timeLabels[index]}
                 className={`group/col relative flex items-center justify-end flex-col w-[calc(100%/12)] pt-0.5 ${isCurrent ? 'is-current' : ''}`}
               >
                 {/* Precipitation overlay */}
-                {column.hasPrecipitation && <div className="weather-column-rain absolute inset-0 bottom-[20%] overflow-hidden" />}
+                {column.hasPrecipitation && (
+                  <div className="weather-column-rain absolute inset-0 bottom-[20%] overflow-hidden" />
+                )}
 
                 {/* Daylight indicator */}
                 {isDaylight && (
@@ -96,7 +98,10 @@ export function WeatherChart({ data, hideLocation }: WeatherChartProps) {
       {!hideLocation && (
         <div className="flex items-center justify-center mt-4 gap-1.5 text-xs text-white/50">
           <div className="location-icon relative w-[0.8em] h-[0.8em] rounded-[0_50%_50%_50%] bg-current shrink-0" />
-          <span className="truncate">{location}{areaName ? `, ${areaName}` : ''}</span>
+          <span className="truncate">
+            {location}
+            {areaName ? `, ${areaName}` : ''}
+          </span>
         </div>
       )}
 

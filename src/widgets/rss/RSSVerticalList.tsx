@@ -31,8 +31,11 @@ export function RSSVerticalList({ items, collapseAfter, singleLineTitles }: RSSV
   return (
     <div className="rss-vertical-list">
       <div className="rss-items space-y-1">
-        {visibleItems.map((item, index) => (
-          <article key={item.link + index} className="rss-item">
+        {visibleItems.map((item) => (
+          <article
+            key={item.link}
+            className="rss-item"
+          >
             <a
               href={item.link}
               target="_blank"

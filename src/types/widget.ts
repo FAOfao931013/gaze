@@ -42,6 +42,12 @@ export interface WidgetDefinition<TConfig = WidgetConfig, TData = unknown> {
    * Called during build time to fetch widget data
    */
   fetcher: WidgetFetcher<TConfig, TData>
+
+  /**
+   * If true, the widget renders without the standard frame (header + glass card)
+   * Used for container widgets like split-column that manage their own layout
+   */
+  frameless?: boolean
 }
 
 /**

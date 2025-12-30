@@ -21,9 +21,9 @@ export function YouTubeHorizontalCards({ videos }: YouTubeHorizontalCardsProps) 
   return (
     <div className="youtube-horizontal-cards overflow-x-auto -mx-6 px-6">
       <div className="flex gap-4 pb-2">
-        {videos.map((video, index) => (
+        {videos.map((video) => (
           <a
-            key={video.videoId + index}
+            key={video.videoId}
             href={`https://www.youtube.com/watch?v=${video.videoId}`}
             target="_blank"
             rel="noopener noreferrer"

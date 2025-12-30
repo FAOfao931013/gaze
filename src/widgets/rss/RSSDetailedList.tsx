@@ -30,8 +30,11 @@ export function RSSDetailedList({ items, collapseAfter }: RSSDetailedListProps) 
   return (
     <div className="rss-detailed-list">
       <div className="rss-items space-y-4">
-        {visibleItems.map((item, index) => (
-          <article key={item.link + index} className="rss-item">
+        {visibleItems.map((item) => (
+          <article
+            key={item.link}
+            className="rss-item"
+          >
             <a
               href={item.link}
               target="_blank"
@@ -63,9 +66,9 @@ export function RSSDetailedList({ items, collapseAfter }: RSSDetailedListProps) 
                   </div>
                   {item.categories && item.categories.length > 0 && (
                     <div className="flex flex-wrap gap-1 mt-1.5">
-                      {item.categories.slice(0, 3).map((cat, catIndex) => (
+                      {item.categories.slice(0, 3).map((cat) => (
                         <span
-                          key={cat + catIndex}
+                          key={cat}
                           className="px-1.5 py-0.5 text-[10px] bg-white/10 text-white/50 rounded"
                         >
                           {cat}

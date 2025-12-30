@@ -2,11 +2,13 @@
 /**
  * Universal Widget Container
  * Provides a consistent wrapper for all widget types with header and error handling
+ * Uses WidgetFrame for the visual frame (unless widget is frameless)
  */
 
 import { getWidget } from '../lib/registry'
 import type { WidgetProps } from '../types/widget'
 import { WidgetError } from './WidgetError'
+import WidgetFrame from './WidgetFrame.astro'
 
 interface Props extends WidgetProps {}
 
@@ -19,21 +21,32 @@ const errorMessage = isError && 'message' in data ? String(data.message) : 'Fail
 // Get widget definition from registry
 const widgetDef = getWidget(config.type)
 const WidgetComponent = widgetDef?.component
+const isFrameless = widgetDef?.frameless === true
 
 // Display title or fallback to type
 const displayTitle = config.title || config.type
 ---
 
-<div class="widget-wrapper" data-widget-type={config.type} data-widget-slug={config.slug}>
-  {/* Widget Header - Outside the card */}
-  {!config.hideHeader && (
-    <div class="widget-header px-1 pb-1.5">
-      <h2 class="text-xs font-semibold text-white/50 uppercase tracking-wider">{displayTitle}</h2>
+{isFrameless ? (
+  /* Frameless widgets (containers) render directly without frame */
+  isError ? (
+    <WidgetError widgetType={config.type} error={errorMessage} client:load />
+  ) : !WidgetComponent ? (
+    <div class="text-white/50">
+      <p class="text-sm">Unknown widget type: {config.type}</p>
+      <p class="text-xs mt-2">Widget not registered in the registry</p>
     </div>
-  )}
-
-  {/* Widget Content - Inside the card */}
-  <div class="widget-content glass rounded-lg overflow-hidden p-3">
+  ) : (
+    <WidgetComponent config={config} data={data} />
+  )
+) : (
+  /* Normal widgets get the standard frame */
+  <WidgetFrame
+    title={displayTitle}
+    hideHeader={config.hideHeader}
+    widgetType={config.type}
+    widgetSlug={config.slug}
+  >
     {isError ? (
       <WidgetError widgetType={config.type} error={errorMessage} client:load />
     ) : !WidgetComponent ? (
@@ -44,11 +57,5 @@ const displayTitle = config.title || config.type
     ) : (
       <WidgetComponent config={config} data={data} />
     )}
-  </div>
-</div>
-
-<style>
-  .widget-wrapper {
-    height: fit-content;
-  }
-</style>
+  </WidgetFrame>
+)}

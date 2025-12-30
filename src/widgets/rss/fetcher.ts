@@ -7,6 +7,14 @@ import Parser from 'rss-parser'
 import type { WidgetFetcher } from '../../types/widget'
 import type { RSSData, RSSItem, RSSWidgetConfig } from './types'
 
+// Extended RSS item type for non-standard fields
+interface ExtendedRSSItem {
+  'itunes:image'?: { href?: string }
+  'media:content'?: { url?: string }
+  'media:thumbnail'?: { url?: string }
+  'dc:creator'?: string
+}
+
 /**
  * RSS Widget Fetcher
  * Fetches RSS feed data at build time using rss-parser library
@@ -25,6 +33,8 @@ export const rssFetcher: WidgetFetcher<RSSWidgetConfig, RSSData> = async (config
 
     // Convert parsed feed to our data structure
     const items: RSSItem[] = feed.items.map((item) => {
+      const extItem = item as typeof item & ExtendedRSSItem
+
       // Extract image from various RSS formats
       let imageUrl: string | undefined
 
@@ -34,27 +44,33 @@ export const rssFetcher: WidgetFetcher<RSSWidgetConfig, RSSData> = async (config
       }
 
       // Try itunes:image (common in podcast feeds)
-      if (!imageUrl && (item as any)['itunes:image']?.href) {
-        imageUrl = (item as any)['itunes:image'].href
+      if (!imageUrl && extItem['itunes:image']?.href) {
+        imageUrl = extItem['itunes:image'].href
       }
 
       // Try media:content (common in YouTube and media RSS)
-      if (!imageUrl && (item as any)['media:content']?.url) {
-        imageUrl = (item as any)['media:content'].url
+      if (!imageUrl && extItem['media:content']?.url) {
+        imageUrl = extItem['media:content'].url
       }
 
       // Try media:thumbnail
-      if (!imageUrl && (item as any)['media:thumbnail']?.url) {
-        imageUrl = (item as any)['media:thumbnail'].url
+      if (!imageUrl && extItem['media:thumbnail']?.url) {
+        imageUrl = extItem['media:thumbnail'].url
       }
 
       // Extract author
-      const author = item.creator || item.author || (item as any)['dc:creator'] || undefined
+      const author = item.creator || item.author || extItem['dc:creator'] || undefined
 
       // Extract categories/tags
       let categories: string[] | undefined
       if (item.categories && item.categories.length > 0) {
-        categories = item.categories.map((cat: any) => (typeof cat === 'string' ? cat : cat._ || cat.term || String(cat)))
+        categories = item.categories.map((cat) =>
+          typeof cat === 'string'
+            ? cat
+            : (cat as { _?: string; term?: string })._ ||
+              (cat as { _?: string; term?: string }).term ||
+              String(cat),
+        )
       }
 
       return {

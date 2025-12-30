@@ -306,7 +306,9 @@ export const weatherFetcher: WidgetFetcher<WeatherWidgetConfig, WeatherData> = a
     units,
   })
 
-  console.log(`[Weather Fetcher] Successfully fetched weather: ${data.temperature}°, ${data.condition}`)
+  console.log(
+    `[Weather Fetcher] Successfully fetched weather: ${data.temperature}°, ${data.condition}`,
+  )
 
   return data
 }

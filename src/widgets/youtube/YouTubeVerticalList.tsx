@@ -30,8 +30,11 @@ export function YouTubeVerticalList({ videos, collapseAfter }: YouTubeVerticalLi
   return (
     <div className="youtube-vertical-list">
       <div className="youtube-items space-y-2">
-        {visibleVideos.map((video, index) => (
-          <article key={video.videoId + index} className="youtube-item">
+        {visibleVideos.map((video) => (
+          <article
+            key={video.videoId}
+            className="youtube-item"
+          >
             <a
               href={`https://www.youtube.com/watch?v=${video.videoId}`}
               target="_blank"

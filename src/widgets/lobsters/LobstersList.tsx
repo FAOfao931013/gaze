@@ -30,8 +30,11 @@ export function LobstersList({ stories, collapseAfter }: LobstersListProps) {
   return (
     <div className="lobsters-list">
       <div className="lobsters-items space-y-1">
-        {visibleStories.map((story, index) => (
-          <article key={story.commentsUrl + index} className="lobsters-item">
+        {visibleStories.map((story) => (
+          <article
+            key={story.commentsUrl}
+            className="lobsters-item"
+          >
             <a
               href={story.url}
               target="_blank"
@@ -67,6 +70,7 @@ export function LobstersList({ stories, collapseAfter }: LobstersListProps) {
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
+                    aria-hidden="true"
                   >
                     <path
                       strokeLinecap="round"
@@ -91,6 +95,7 @@ export function LobstersList({ stories, collapseAfter }: LobstersListProps) {
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
+                    aria-hidden="true"
                   >
                     <path
                       strokeLinecap="round"
@@ -130,7 +135,6 @@ export function LobstersList({ stories, collapseAfter }: LobstersListProps) {
           {isExpanded ? 'Show less' : `Show ${hiddenCount} more`}
         </button>
       )}
-
     </div>
   )
 }

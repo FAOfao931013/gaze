@@ -31,7 +31,10 @@ export function HackerNewsList({ stories, collapseAfter }: HackerNewsListProps) 
     <div className="hackernews-list">
       <div className="hackernews-items space-y-1">
         {visibleStories.map((story, index) => (
-          <article key={story.id || index} className="hackernews-item">
+          <article
+            key={story.id || index}
+            className="hackernews-item"
+          >
             <a
               href={story.url}
               target="_blank"
@@ -54,6 +57,7 @@ export function HackerNewsList({ stories, collapseAfter }: HackerNewsListProps) 
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
+                    aria-hidden="true"
                   >
                     <path
                       strokeLinecap="round"
@@ -78,6 +82,7 @@ export function HackerNewsList({ stories, collapseAfter }: HackerNewsListProps) 
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
+                    aria-hidden="true"
                   >
                     <path
                       strokeLinecap="round"

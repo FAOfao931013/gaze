@@ -1,0 +1,152 @@
+---
+/**
+ * Split Column Widget Component
+ * Renders child widgets side by side horizontally
+ * Converts to single column on mobile or when not enough width is available
+ */
+
+import { WidgetError } from '../../components/WidgetError'
+import WidgetFrame from '../../components/WidgetFrame.astro'
+import { getWidget } from '../../lib/registry'
+import type { WidgetProps } from '../../types/widget'
+import type { SplitColumnData, SplitColumnWidgetConfigBase } from './types'
+
+interface Props extends WidgetProps<SplitColumnData> {
+  config: SplitColumnWidgetConfigBase
+}
+
+const { config, data } = Astro.props
+
+// Configuration with defaults
+const maxColumns = Math.min(Math.max(config.maxColumns || 2, 1), 5)
+const childWidgets = data?.childWidgets || []
+
+// Generate grid column class based on maxColumns
+function getGridClass(maxCols: number): string {
+  switch (maxCols) {
+    case 1:
+      return 'split-column-1'
+    case 2:
+      return 'split-column-2'
+    case 3:
+      return 'split-column-3'
+    case 4:
+      return 'split-column-4'
+    case 5:
+      return 'split-column-5'
+    default:
+      return 'split-column-2'
+  }
+}
+
+const gridClass = getGridClass(maxColumns)
+---
+
+<div class={`split-column-container ${gridClass}`}>
+  {childWidgets.map((widgetProps, index) => {
+    const childConfig = widgetProps.config
+    const isError = widgetProps.error || (widgetProps.data && typeof widgetProps.data === 'object' && 'error' in widgetProps.data)
+    const errorMessage = isError && widgetProps.data && typeof widgetProps.data === 'object' && 'message' in widgetProps.data
+      ? String(widgetProps.data.message)
+      : 'Failed to fetch data'
+
+    const widgetDef = getWidget(childConfig.type)
+    const WidgetComponent = widgetDef?.component
+    const displayTitle = childConfig.title || childConfig.type
+
+    return (
+      <div class="split-column-item">
+        <WidgetFrame
+          title={displayTitle}
+          hideHeader={childConfig.hideHeader}
+          widgetType={childConfig.type}
+          widgetSlug={childConfig.slug || `${childConfig.type}-${index}`}
+        >
+          {isError ? (
+            <WidgetError widgetType={childConfig.type} error={errorMessage} client:load />
+          ) : !WidgetComponent ? (
+            <div class="text-white/50">
+              <p class="text-sm">Unknown widget type: {childConfig.type}</p>
+              <p class="text-xs mt-2">Widget not registered in the registry</p>
+            </div>
+          ) : (
+            <WidgetComponent config={childConfig} data={widgetProps.data} />
+          )}
+        </WidgetFrame>
+      </div>
+    )
+  })}
+</div>
+
+<style>
+  .split-column-container {
+    display: grid;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .split-column-item {
+    min-width: 0; /* Prevent grid item overflow */
+  }
+
+  /* Mobile: Always single column */
+  @media (max-width: 767px) {
+    .split-column-container {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Tablet and up: Apply max columns */
+  @media (min-width: 768px) {
+    .split-column-1 {
+      grid-template-columns: 1fr;
+    }
+
+    .split-column-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .split-column-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .split-column-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .split-column-5 {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+
+  /* Medium screens: Limit columns for readability */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .split-column-3,
+    .split-column-4,
+    .split-column-5 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* Large screens: Allow up to 3 columns */
+  @media (min-width: 1024px) and (max-width: 1279px) {
+    .split-column-4,
+    .split-column-5 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* Extra large screens: Allow up to 4 columns */
+  @media (min-width: 1280px) and (max-width: 1535px) {
+    .split-column-5 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  /* 2XL screens: Allow all 5 columns */
+  @media (min-width: 1536px) {
+    .split-column-5 {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+</style>

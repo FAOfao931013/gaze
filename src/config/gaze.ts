@@ -15,13 +15,6 @@ export const gazeConfig = {
           size: 'small',
           widgets: [
             {
-              type: 'hacker-news',
-              title: 'Hacker News Top Stories',
-              limit: 10,
-              collapseAfter: 5,
-              sortBy: 'top',
-            },
-            {
               type: 'rss',
               title: 'GitHub Trending',
               feedUrl: 'https://mshibanami.github.io/GitHubTrendingRSS/daily/all.xml',
@@ -38,7 +31,7 @@ export const gazeConfig = {
               type: 'lobsters',
               limit: 15,
               sortBy: 'hot',
-              collapseAfter: 7,
+              collapseAfter: 8,
             },
             {
               type: 'youtube',
@@ -49,8 +42,28 @@ export const gazeConfig = {
                 'UCHnyfMqiRRG1u-2MsSQLbXA',
               ],
               limit: 25,
-              style: 'grid-cards',
+              style: 'horizontal-cards',
               collapseAfter: 8,
+            },
+            {
+              type: 'split-column',
+              maxColumns: 2,
+              widgets: [
+                {
+                  type: 'hacker-news',
+                  title: 'Hacker News Top Stories',
+                  limit: 10,
+                  collapseAfter: 5,
+                  sortBy: 'top',
+                },
+                {
+                  type: 'hacker-news',
+                  title: 'Hacker News New Stories',
+                  limit: 10,
+                  collapseAfter: 5,
+                  sortBy: 'new',
+                },
+              ],
             },
           ],
         },
@@ -62,8 +75,8 @@ export const gazeConfig = {
               title: 'Weather',
               location: 'Shanghai',
             },
-          ]
-        }
+          ],
+        },
       ],
     },
   ],

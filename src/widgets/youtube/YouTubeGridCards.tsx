@@ -36,8 +36,11 @@ export function YouTubeGridCards({ videos, collapseAfter }: YouTubeGridCardsProp
           gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
         }}
       >
-        {visibleVideos.map((video, index) => (
-          <article key={video.videoId + index} className="youtube-card">
+        {visibleVideos.map((video) => (
+          <article
+            key={video.videoId}
+            className="youtube-card"
+          >
             <a
               href={`https://www.youtube.com/watch?v=${video.videoId}`}
               target="_blank"

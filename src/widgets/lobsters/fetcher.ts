@@ -40,7 +40,7 @@ function buildFeedUrl(config: LobstersWidgetConfig): string {
 
   // Normalize instance URL
   let instanceUrl = config.instanceUrl || 'https://lobste.rs/'
-  instanceUrl = instanceUrl.replace(/\/+$/, '') + '/'
+  instanceUrl = `${instanceUrl.replace(/\/+$/, '')}/`
 
   // Determine sort order (API uses 'hottest'/'newest' instead of 'hot'/'new')
   const sortBy = config.sortBy || 'hot'
@@ -55,7 +55,9 @@ function buildFeedUrl(config: LobstersWidgetConfig): string {
   return `${instanceUrl}${apiSortBy}.json`
 }
 
-export const lobstersFetcher: WidgetFetcher<LobstersWidgetConfig, LobstersData> = async (config) => {
+export const lobstersFetcher: WidgetFetcher<LobstersWidgetConfig, LobstersData> = async (
+  config,
+) => {
   const feedUrl = buildFeedUrl(config)
   console.log(`[Lobsters Fetcher] Fetching from: ${feedUrl}`)
 
