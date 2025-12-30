@@ -15,14 +15,17 @@ export const gazeConfig = {
           size: 'small',
           widgets: [
             {
-              type: 'weather',
-              title: 'Weather',
-              location: 'Shanghai',
-            },
-            {
               type: 'rss',
               title: 'YC News',
               feedUrl: 'https://news.ycombinator.com/rss',
+              limit: 10,
+              style: 'vertical-list',
+              collapseAfter: 5,
+            },
+            {
+              type: 'rss',
+              title: 'GitHub Trending',
+              feedUrl: 'https://mshibanami.github.io/GitHubTrendingRSS/daily/all.xml',
               limit: 10,
               style: 'vertical-list',
               collapseAfter: 5,
@@ -33,12 +36,10 @@ export const gazeConfig = {
           size: 'full',
           widgets: [
             {
-              type: 'rss',
-              title: 'GitHub Trending',
-              feedUrl: 'https://mshibanami.github.io/GitHubTrendingRSS/daily/all.xml',
-              limit: 10,
-              style: 'detailed-list',
-              collapseAfter: 5,
+              type: 'lobsters',
+              limit: 15,
+              sortBy: 'hot',
+              collapseAfter: 7,
             },
             {
               type: 'youtube',
@@ -52,6 +53,16 @@ export const gazeConfig = {
             },
           ],
         },
+        {
+          size: 'small',
+          widgets: [
+            {
+              type: 'weather',
+              title: 'Weather',
+              location: 'Shanghai',
+            },
+          ]
+        }
       ],
     },
   ],

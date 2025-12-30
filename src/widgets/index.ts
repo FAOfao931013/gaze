@@ -5,6 +5,8 @@
  */
 
 import { registerWidget } from '../lib/registry'
+import { lobstersWidget } from './lobsters'
+import type { LobstersWidgetConfig } from './lobsters/types'
 import { rssWidget } from './rss'
 import type { RSSWidgetConfig } from './rss/types'
 import { weatherWidget } from './weather'
@@ -20,6 +22,7 @@ export function registerAllWidgets(): void {
   registerWidget('weather', weatherWidget)
   registerWidget('rss', rssWidget)
   registerWidget('youtube', youtubeWidget)
+  registerWidget('lobsters', lobstersWidget)
 
   console.log('[Widgets] All widgets registered successfully')
 }
@@ -31,9 +34,14 @@ registerAllWidgets()
 export type { WeatherData, WeatherWidgetConfig } from './weather'
 export type { RSSData, RSSItem, RSSWidgetConfig } from './rss'
 export type { YouTubeData, YouTubeVideo, YouTubeWidgetConfig } from './youtube'
+export type { LobstersData, LobstersStory, LobstersWidgetConfig } from './lobsters'
 
 /**
  * Union type of all registered widget configs
  * This enables type-safe widget configuration with autocomplete
  */
-export type WidgetConfigUnion = WeatherWidgetConfig | RSSWidgetConfig | YouTubeWidgetConfig
+export type WidgetConfigUnion =
+  | WeatherWidgetConfig
+  | RSSWidgetConfig
+  | YouTubeWidgetConfig
+  | LobstersWidgetConfig

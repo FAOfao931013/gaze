@@ -1,0 +1,28 @@
+---
+/**
+ * Lobsters Widget Content Component
+ * Renders Lobsters posts with tags, points, comments, and score
+ * Container and header are handled by Widget.astro
+ */
+
+import type { WidgetProps } from '../../types/widget'
+import type { LobstersData, LobstersWidgetConfig } from './types'
+import { LobstersList } from './LobstersList'
+
+interface Props extends WidgetProps<LobstersData> {
+  config: LobstersWidgetConfig
+}
+
+const { config, data } = Astro.props
+
+// Configuration options with defaults
+const collapseAfter = config.collapseAfter ?? 5
+---
+
+{data && (
+  <LobstersList
+    stories={data.stories}
+    collapseAfter={collapseAfter}
+    client:load
+  />
+)}

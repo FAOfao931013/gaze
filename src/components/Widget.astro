@@ -19,13 +19,16 @@ const errorMessage = isError && 'message' in data ? String(data.message) : 'Fail
 // Get widget definition from registry
 const widgetDef = getWidget(config.type)
 const WidgetComponent = widgetDef?.component
+
+// Display title or fallback to type
+const displayTitle = config.title || config.type
 ---
 
 <div class="widget-wrapper" data-widget-type={config.type} data-widget-slug={config.slug}>
   {/* Widget Header - Outside the card */}
-  {!config.hideHeader && config.title && (
+  {!config.hideHeader && (
     <div class="widget-header px-1 pb-1.5">
-      <h2 class="text-xs font-semibold text-white/50 uppercase tracking-wider">{config.title}</h2>
+      <h2 class="text-xs font-semibold text-white/50 uppercase tracking-wider">{displayTitle}</h2>
     </div>
   )}
 
