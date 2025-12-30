@@ -13,4 +13,4 @@ export const youtubeWidget: WidgetDefinition<YouTubeWidgetConfig, YouTubeData> =
   fetcher: youtubeFetcher,
 }
 
-export type { YouTubeWidgetConfig, YouTubeData, YouTubeVideo } from './types'
+export type { YouTubeWidgetConfig, YouTubeData, YouTubeVideo, YouTubeWidgetStyle } from './types'

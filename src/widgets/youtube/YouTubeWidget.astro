@@ -1,66 +1,55 @@
 ---
 /**
  * YouTube Widget Content Component
- * Renders YouTube videos in a grid layout (content only, no container)
+ * Renders YouTube videos in various layouts (content only, no container)
  * Container and header are handled by Widget.astro
+ *
+ * Styles:
+ * - horizontal-cards (default): Horizontal scrollable cards
+ * - vertical-list: Compact list with collapse support
+ * - grid-cards: Responsive grid with collapse support
  */
 
 import type { WidgetProps } from '../../types/widget'
-import type { YouTubeData } from './types'
+import type { YouTubeData, YouTubeWidgetConfig, YouTubeWidgetStyle } from './types'
+import { YouTubeHorizontalCards } from './YouTubeHorizontalCards'
+import { YouTubeVerticalList } from './YouTubeVerticalList'
+import { YouTubeGridCards } from './YouTubeGridCards'
 
 interface Props extends WidgetProps<YouTubeData> {}
 
-const { data } = Astro.props
+const { data, config } = Astro.props
+
+// Cast config to YouTubeWidgetConfig to access YouTube-specific properties
+const youtubeConfig = config as YouTubeWidgetConfig
+const style: YouTubeWidgetStyle = youtubeConfig?.style ?? 'horizontal-cards'
+const collapseAfter = youtubeConfig?.collapseAfter ?? 8
 ---
 
-{data && (
+{data && data.videos.length > 0 ? (
   <>
-    {data.videos.length > 0 ? (
-      <div class="overflow-x-auto -mx-6 px-6">
-        <div class="flex gap-4 pb-2">
-          {data.videos.map((video) => (
-            <a
-              href={`https://www.youtube.com/watch?v=${video.videoId}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="group cursor-pointer block shrink-0"
-              style="width: 280px"
-            >
-              <div class="aspect-video bg-zinc-200 dark:bg-zinc-800/50 rounded-md mb-2 relative overflow-hidden border border-zinc-300 dark:border-[#2a2a2a]">
-                {video.thumbnail ? (
-                  <img
-                    src={video.thumbnail}
-                    alt={video.title}
-                    class="w-full h-full object-cover"
-                    loading="lazy"
-                  />
-                ) : (
-                  <div class="absolute inset-0 bg-linear-to-br from-zinc-300/30 to-zinc-400/50 dark:from-zinc-800/30 dark:to-zinc-900/50 group-hover:from-zinc-400/30 dark:group-hover:from-zinc-700/30 transition-colors" />
-                )}
-              </div>
-              <h3 class="text-sm font-medium text-zinc-700 dark:text-zinc-300 group-hover:text-[#ff6b1a] transition-colors line-clamp-2 mb-1" style="line-height: 1.4; min-height: 2.8em;">
-                {video.title}
-              </h3>
-              <div class="text-xs text-zinc-500 dark:text-zinc-500">
-                {video.channelTitle}
-              </div>
-            </a>
-          ))}
-        </div>
-      </div>
-    ) : (
-      <div class="empty-state text-center py-8">
-        <p class="text-white/40">No videos available</p>
-      </div>
+    {style === 'horizontal-cards' && (
+      <YouTubeHorizontalCards client:load videos={data.videos} />
+    )}
+
+    {style === 'vertical-list' && (
+      <YouTubeVerticalList
+        client:load
+        videos={data.videos}
+        collapseAfter={collapseAfter}
+      />
+    )}
+
+    {style === 'grid-cards' && (
+      <YouTubeGridCards
+        client:load
+        videos={data.videos}
+        collapseAfter={collapseAfter}
+      />
     )}
   </>
+) : (
+  <div class="empty-state text-center py-8">
+    <p class="text-white/40">No videos available</p>
+  </div>
 )}
-
-<style>
-  .line-clamp-2 {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-</style>
