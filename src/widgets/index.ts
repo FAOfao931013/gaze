@@ -9,6 +9,8 @@ import { rssWidget } from './rss'
 import type { RSSWidgetConfig } from './rss/types'
 import { weatherWidget } from './weather'
 import type { WeatherWidgetConfig } from './weather/types'
+import { youtubeWidget } from './youtube'
+import type { YouTubeWidgetConfig } from './youtube/types'
 
 /**
  * Register all widgets
@@ -17,6 +19,7 @@ import type { WeatherWidgetConfig } from './weather/types'
 export function registerAllWidgets(): void {
   registerWidget('weather', weatherWidget)
   registerWidget('rss', rssWidget)
+  registerWidget('youtube', youtubeWidget)
 
   console.log('[Widgets] All widgets registered successfully')
 }
@@ -27,9 +30,10 @@ registerAllWidgets()
 // Re-export widget types for convenience
 export type { WeatherData, WeatherWidgetConfig } from './weather'
 export type { RSSData, RSSItem, RSSWidgetConfig } from './rss'
+export type { YouTubeData, YouTubeVideo, YouTubeWidgetConfig } from './youtube'
 
 /**
  * Union type of all registered widget configs
  * This enables type-safe widget configuration with autocomplete
  */
-export type WidgetConfigUnion = WeatherWidgetConfig | RSSWidgetConfig
+export type WidgetConfigUnion = WeatherWidgetConfig | RSSWidgetConfig | YouTubeWidgetConfig

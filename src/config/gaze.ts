@@ -36,6 +36,16 @@ export const gazeConfig = {
               feedUrl: 'https://mshibanami.github.io/GitHubTrendingRSS/daily/all.xml',
               limit: 10,
             },
+            {
+              type: 'youtube',
+              title: 'Recent Videos',
+              channels: [
+                'UCXuqSBlHAE6Xw-yeJA0Tunw',
+                'UCBJycsmduvYEL83R_U4JriQ',
+                'UCHnyfMqiRRG1u-2MsSQLbXA',
+              ],
+              limit: 8,
+            },
           ],
         },
       ],
