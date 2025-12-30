@@ -45,14 +45,29 @@ bun run preview
 ### GitHub Pages Setup
 
 1. Fork this repository
-2. Go to **Settings → Secrets and variables → Actions → Variables**
-3. Add a new repository variable:
-   - Name: `GITHUB_USERNAME`
-   - Value: Your GitHub username (e.g., `octocat`)
-4. Go to **Settings → Pages** and set source to **GitHub Actions**
-5. Push any change to trigger the deployment workflow
+2. Go to **Settings → Pages** and set source to **GitHub Actions**
+3. Push any change to trigger the deployment workflow
 
 The site will be deployed to `https://<your-username>.github.io/gaze/`
+
+### Auto-Refresh Schedule
+
+By default, the dashboard rebuilds every 6 hours to fetch fresh data. To change this schedule:
+
+1. Edit [.github/workflows/deploy.yml](.github/workflows/deploy.yml#L8-L10)
+2. Modify the `cron` expression in the `schedule` section:
+   ```yaml
+   schedule:
+     - cron: '0 */6 * * *'  # Every 6 hours
+   ```
+
+Common schedules:
+- Every hour: `'0 * * * *'`
+- Every 3 hours: `'0 */3 * * *'`
+- Every 12 hours: `'0 */12 * * *'`
+- Daily at midnight UTC: `'0 0 * * *'`
+
+Learn more about cron syntax at [crontab.guru](https://crontab.guru/).
 
 ## Widget System
 
