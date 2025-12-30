@@ -11,13 +11,23 @@ export default defineConfig({
       site: `https://${githubUsername}.github.io`,
       base: '/gaze',
     }),
+  ...(isProduction && {
+    compressHTML: true,
+    build: {
+      inlineStylesheets: 'auto',
+    },
+    vite: {
+      css: {
+        transformer: 'postcss',
+      },
+      ssr: {
+        noExternal: ['framer-motion'],
+      },
+      build: {
+        minify: 'esbuild',
+        cssMinify: true,
+      },
+    },
+  }),
   integrations: [react()],
-  vite: {
-    css: {
-      transformer: 'postcss',
-    },
-    ssr: {
-      noExternal: ['framer-motion'],
-    },
-  },
 })
