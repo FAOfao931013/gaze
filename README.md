@@ -42,10 +42,17 @@ bun run preview
 
 ## Deployment
 
-Gaze supports multiple deployment platforms. Choose the one that fits your needs:
+### GitHub Pages Setup
 
-<a href="https://github.com/2eha0/gaze/actions/workflows/deploy.yml" rel="nofollow"><img src="https://img.shields.io/badge/deploy-GitHub%20Pages-black?style=for-the-badge&logo=github" alt="Deploy to GitHub Pages" style="max-width: 100%;"></a>
+1. Fork this repository
+2. Go to **Settings → Secrets and variables → Actions → Variables**
+3. Add a new repository variable:
+   - Name: `GITHUB_USERNAME`
+   - Value: Your GitHub username (e.g., `octocat`)
+4. Go to **Settings → Pages** and set source to **GitHub Actions**
+5. Push any change to trigger the deployment workflow
 
+The site will be deployed to `https://<your-username>.github.io/gaze/`
 
 ## Widget System
 

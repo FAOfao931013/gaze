@@ -2,13 +2,15 @@ import react from '@astrojs/react'
 import { defineConfig } from 'astro/config'
 
 const isProduction = process.env.NODE_ENV === 'production'
+const githubUsername = process.env.GITHUB_USERNAME
 
 // https://astro.build/config
 export default defineConfig({
-  ...(isProduction && {
-    site: 'https://2eha0.github.io',
-    base: '/gaze',
-  }),
+  ...(isProduction &&
+    githubUsername && {
+      site: `https://${githubUsername}.github.io`,
+      base: '/gaze',
+    }),
   integrations: [react()],
   vite: {
     css: {

@@ -44,6 +44,8 @@ jobs:
 
       - name: Build with Astro
         run: bun run build
+        env:
+          GITHUB_USERNAME: ${{ vars.GITHUB_USERNAME }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
