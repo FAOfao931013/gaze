@@ -21,16 +21,16 @@ const widgetDef = getWidget(config.type)
 const WidgetComponent = widgetDef?.component
 ---
 
-<div class="widget-container glass rounded-lg overflow-hidden" data-widget-type={config.type} data-widget-slug={config.slug}>
-  {/* Widget Header */}
+<div class="widget-wrapper" data-widget-type={config.type} data-widget-slug={config.slug}>
+  {/* Widget Header - Outside the card */}
   {!config.hideHeader && config.title && (
-    <div class="widget-header border-b border-white/10 px-6 py-4">
-      <h2 class="text-lg font-semibold text-white/90">{config.title}</h2>
+    <div class="widget-header px-1 pb-1.5">
+      <h2 class="text-xs font-semibold text-white/50 uppercase tracking-wider">{config.title}</h2>
     </div>
   )}
 
-  {/* Widget Content */}
-  <div class="widget-content p-6">
+  {/* Widget Content - Inside the card */}
+  <div class="widget-content glass rounded-lg overflow-hidden p-3">
     {isError ? (
       <WidgetError widgetType={config.type} error={errorMessage} client:load />
     ) : !WidgetComponent ? (
@@ -45,7 +45,7 @@ const WidgetComponent = widgetDef?.component
 </div>
 
 <style>
-  .widget-container {
+  .widget-wrapper {
     height: fit-content;
   }
 </style>
