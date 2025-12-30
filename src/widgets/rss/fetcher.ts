@@ -48,12 +48,23 @@ export const rssFetcher: WidgetFetcher<RSSWidgetConfig, RSSData> = async (config
         imageUrl = (item as any)['media:thumbnail'].url
       }
 
+      // Extract author
+      const author = item.creator || item.author || (item as any)['dc:creator'] || undefined
+
+      // Extract categories/tags
+      let categories: string[] | undefined
+      if (item.categories && item.categories.length > 0) {
+        categories = item.categories.map((cat: any) => (typeof cat === 'string' ? cat : cat._ || cat.term || String(cat)))
+      }
+
       return {
         title: item.title || 'Untitled',
         link: item.link || '#',
         pubDate: item.pubDate || item.isoDate || new Date().toISOString(),
         description: item.contentSnippet || item.content || undefined,
         image: imageUrl,
+        author,
+        categories,
       }
     })
 
