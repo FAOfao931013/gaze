@@ -10,7 +10,7 @@
   </p>
 </div>
 
-![Gaze Dashboard Screenshot](screenshot.png)
+![Gaze Dashboard Screenshot](screenshot-2025-12-31.png)
 
 ## Architecture
 
