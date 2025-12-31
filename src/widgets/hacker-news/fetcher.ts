@@ -6,6 +6,7 @@
 
 import type { WidgetFetcher } from '../../types/widget'
 import type { HackerNewsData, HackerNewsStory, HackerNewsWidgetConfig } from './types'
+import { httpFetch } from '../../lib/http'
 
 /**
  * Hacker News API response for a single post
@@ -36,12 +37,7 @@ function extractDomain(url: string): string {
  * Fetch post IDs from Hacker News API
  */
 async function fetchPostIds(sortBy: string): Promise<number[]> {
-  const response = await fetch(`https://hacker-news.firebaseio.com/v0/${sortBy}stories.json`, {
-    headers: {
-      'User-Agent': 'Gaze-Dashboard/1.0',
-      Accept: 'application/json',
-    },
-  })
+  const response = await httpFetch(`https://hacker-news.firebaseio.com/v0/${sortBy}stories.json`)
 
   if (!response.ok) {
     throw new Error(`Failed to fetch post IDs: HTTP ${response.status}`)
@@ -55,12 +51,7 @@ async function fetchPostIds(sortBy: string): Promise<number[]> {
  */
 async function fetchPost(id: number): Promise<HackerNewsPostResponse | null> {
   try {
-    const response = await fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`, {
-      headers: {
-        'User-Agent': 'Gaze-Dashboard/1.0',
-        Accept: 'application/json',
-      },
-    })
+    const response = await httpFetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`)
 
     if (!response.ok) {
       console.error(`[HackerNews Fetcher] Failed to fetch post ${id}: HTTP ${response.status}`)

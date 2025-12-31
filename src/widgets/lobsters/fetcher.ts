@@ -5,6 +5,7 @@
 
 import type { WidgetFetcher } from '../../types/widget'
 import type { LobstersData, LobstersStory, LobstersWidgetConfig } from './types'
+import { httpFetch } from '../../lib/http'
 
 interface LobstersPostResponse {
   created_at: string
@@ -62,12 +63,7 @@ export const lobstersFetcher: WidgetFetcher<LobstersWidgetConfig, LobstersData> 
   console.log(`[Lobsters Fetcher] Fetching from: ${feedUrl}`)
 
   try {
-    const response = await fetch(feedUrl, {
-      headers: {
-        'User-Agent': 'Gaze-Dashboard/1.0',
-        Accept: 'application/json',
-      },
-    })
+    const response = await httpFetch(feedUrl)
 
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}: ${response.statusText}`)

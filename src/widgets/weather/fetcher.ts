@@ -6,6 +6,7 @@
 
 import type { WidgetFetcher } from '../../types/widget'
 import type { WeatherColumn, WeatherData, WeatherWidgetConfig } from './types'
+import { httpFetch } from '../../lib/http'
 
 /**
  * WMO Weather Code to description mapping
@@ -145,7 +146,7 @@ async function fetchOpenMeteoPlace(locationName: string): Promise<OpenMeteoPlace
   const { location, area } = parsePlaceName(locationName)
   const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(location)}&count=20&language=en&format=json`
 
-  const response = await fetch(url)
+  const response = await httpFetch(url)
   if (!response.ok) {
     throw new Error(`Geocoding API error: ${response.status}`)
   }
@@ -193,7 +194,7 @@ async function fetchWeatherForPlace(
   })
 
   const url = `https://api.open-meteo.com/v1/forecast?${params.toString()}`
-  const response = await fetch(url)
+  const response = await httpFetch(url)
 
   if (!response.ok) {
     throw new Error(`Weather API error: ${response.status}`)

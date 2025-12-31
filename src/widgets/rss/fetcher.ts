@@ -6,6 +6,7 @@
 import Parser from 'rss-parser'
 import type { WidgetFetcher } from '../../types/widget'
 import type { RSSData, RSSItem, RSSWidgetConfig } from './types'
+import { USER_AGENT } from '../../lib/http'
 
 // Extended RSS item type for non-standard fields
 interface ExtendedRSSItem {
@@ -25,7 +26,7 @@ export const rssFetcher: WidgetFetcher<RSSWidgetConfig, RSSData> = async (config
   try {
     const parser = new Parser({
       headers: {
-        'User-Agent': 'Gaze-Dashboard/1.0',
+        'User-Agent': USER_AGENT,
       },
     })
 

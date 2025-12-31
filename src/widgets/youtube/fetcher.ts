@@ -6,6 +6,7 @@
 import Parser from 'rss-parser'
 import type { WidgetFetcher } from '../../types/widget'
 import type { YouTubeData, YouTubeVideo, YouTubeWidgetConfig } from './types'
+import { USER_AGENT } from '../../lib/http'
 
 /**
  * YouTube Widget Fetcher
@@ -17,7 +18,7 @@ export const youtubeFetcher: WidgetFetcher<YouTubeWidgetConfig, YouTubeData> = a
   try {
     const parser = new Parser({
       headers: {
-        'User-Agent': 'Gaze-Dashboard/1.0',
+        'User-Agent': USER_AGENT,
       },
     })
 
