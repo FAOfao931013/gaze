@@ -7,15 +7,12 @@ import '../lib/widgets' // Initialize widget registry
 
 // First page is always the homepage
 const page = gazeConfig.pages[0]
-const pageTitle = `${page.name} - Gaze Dashboard`
+const pageTitle = `${page.name} - Gaze Dashboard1`
 
 // Fetch data for all widgets in the page at build time
 const widgetDataMap = await fetchPageWidgetData(page)
 ---
 
 <BaseLayout title={pageTitle}>
-  <GazeLayout
-    page={page}
-    widgetDataMap={widgetDataMap}
-  />
+  <GazeLayout page={page} widgetDataMap={widgetDataMap} />
 </BaseLayout>
