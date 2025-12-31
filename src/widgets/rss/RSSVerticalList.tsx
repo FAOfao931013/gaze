@@ -11,9 +11,10 @@ interface RSSVerticalListProps {
   items: RSSItem[]
   collapseAfter: number
   singleLineTitles: boolean
+  hideDate?: boolean
 }
 
-export function RSSVerticalList({ items, collapseAfter, singleLineTitles }: RSSVerticalListProps) {
+export function RSSVerticalList({ items, collapseAfter, singleLineTitles, hideDate = false }: RSSVerticalListProps) {
   const [isExpanded, setIsExpanded] = useState(false)
 
   const shouldCollapse = collapseAfter !== -1 && items.length > collapseAfter
@@ -51,10 +52,10 @@ export function RSSVerticalList({ items, collapseAfter, singleLineTitles }: RSSV
                 {item.author && (
                   <>
                     <span>{item.author}</span>
-                    <span>·</span>
+                    {!hideDate && <span>·</span>}
                   </>
                 )}
-                <time>{formatRelativeTime(item.pubDate)}</time>
+                {!hideDate && <time>{formatRelativeTime(item.pubDate)}</time>}
               </div>
             </a>
           </article>

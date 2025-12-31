@@ -20,6 +20,7 @@ const { config, data } = Astro.props
 const style = config.style || 'vertical-list'
 const collapseAfter = config.collapseAfter ?? 5
 const singleLineTitles = config.singleLineTitles ?? false
+const hideDate = config.hideDate ?? false
 ---
 
 {data && (
@@ -29,12 +30,14 @@ const singleLineTitles = config.singleLineTitles ?? false
         items={data.items}
         collapseAfter={collapseAfter}
         singleLineTitles={singleLineTitles}
+        hideDate={hideDate}
         client:load
       />
     ) : (
       <RSSDetailedList
         items={data.items}
         collapseAfter={collapseAfter}
+        hideDate={hideDate}
         client:load
       />
     )}

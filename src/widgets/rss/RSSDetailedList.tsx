@@ -10,9 +10,10 @@ import { formatRelativeTime } from './utils'
 interface RSSDetailedListProps {
   items: RSSItem[]
   collapseAfter: number
+  hideDate?: boolean
 }
 
-export function RSSDetailedList({ items, collapseAfter }: RSSDetailedListProps) {
+export function RSSDetailedList({ items, collapseAfter, hideDate = false }: RSSDetailedListProps) {
   const [isExpanded, setIsExpanded] = useState(false)
 
   const shouldCollapse = collapseAfter !== -1 && items.length > collapseAfter
@@ -63,8 +64,8 @@ export function RSSDetailedList({ items, collapseAfter }: RSSDetailedListProps) 
                   )}
                   <div className="flex items-center gap-2 text-xs text-white/40">
                     {item.author && <span>{item.author}</span>}
-                    {item.author && <span>·</span>}
-                    <time>{formatRelativeTime(item.pubDate)}</time>
+                    {item.author && !hideDate && <span>·</span>}
+                    {!hideDate && <time>{formatRelativeTime(item.pubDate)}</time>}
                   </div>
                   {item.categories && item.categories.length > 0 && (
                     <div className="flex flex-wrap gap-1 mt-1.5">
