@@ -43,7 +43,7 @@ export function HackerNewsList({ stories, collapseAfter }: HackerNewsListProps) 
             >
               {/* Title row */}
               <div className="flex items-center gap-2">
-                <h3 className="text-sm text-white/90 hover:text-orange-400 transition-colors line-clamp-2">
+                <h3 className="text-sm widget-link line-clamp-2">
                   {story.title}
                 </h3>
               </div>

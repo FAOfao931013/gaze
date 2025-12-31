@@ -44,7 +44,7 @@ export function RSSVerticalList({ items, collapseAfter, singleLineTitles, hideDa
               className="block py-1.5 px-2 -mx-2 hover:bg-white/5 rounded transition-colors"
             >
               <h3
-                className={`text-sm text-white/90 hover:text-[#ff6b1a] transition-colors ${singleLineTitles ? 'truncate' : 'line-clamp-2'}`}
+                className={`text-sm widget-link ${singleLineTitles ? 'truncate' : 'line-clamp-2'}`}
               >
                 {item.title}
               </h3>

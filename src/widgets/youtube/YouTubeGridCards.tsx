@@ -62,7 +62,7 @@ export function YouTubeGridCards({ videos, collapseAfter }: YouTubeGridCardsProp
                 )}
               </div>
               <h3
-                className="text-sm font-medium text-zinc-300 group-hover:text-[#ff6b1a] transition-colors line-clamp-2 mb-1"
+                className="text-sm font-medium widget-link line-clamp-2 mb-1"
                 style={{ lineHeight: 1.4, minHeight: '2.8em' }}
               >
                 {video.title}
