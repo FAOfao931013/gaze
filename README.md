@@ -47,10 +47,13 @@ bun run preview
 ### GitHub Pages Setup
 
 1. Fork this repository
-2. Go to **Settings → Pages** and set source to **GitHub Actions**
-3. Push any change to trigger the deployment workflow
+2. **Enable GitHub Actions**: Go to the **Actions** tab in your forked repository and click **"I understand my workflows, go ahead and enable them"**
+3. Go to **Settings → Pages** and set source to **GitHub Actions**
+4. Push any change to trigger the deployment workflow
 
 The site will be deployed to `https://<your-username>.github.io/gaze/`
+
+**Note**: GitHub disables workflows in forked repositories by default for security reasons. You must manually enable them in step 2.
 
 ### Auto-Refresh Schedule
 
