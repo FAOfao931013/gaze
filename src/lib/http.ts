@@ -146,9 +146,10 @@ export async function httpFetchJson<T = unknown>(
  * Use this instead of bare rss-parser in widget fetchers
  *
  * Features:
- * - Automatically retries failed requests up to 3 times
- * - Uses exponential backoff (1s, 2s, 4s)
+ * - Automatically retries failed requests up to 6 times
+ * - Uses exponential backoff (1s, 2s, 4s, 8s, 16s, 32s)
  * - Includes standard browser User-Agent to avoid blocking
+ * - Adds timestamp to retries to bypass caching
  * - Only retries on network errors or parsing failures
  *
  * @param url - The RSS feed URL to fetch
@@ -177,7 +178,12 @@ export async function rssFetch<T = Parser.Output<unknown>>(
 
   for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
     try {
-      const feed = await parser.parseURL(url)
+      // Add timestamp to prevent caching on retries
+      const urlWithTimestamp = attempt > 0
+        ? `${url}${url.includes('?') ? '&' : '?'}_t=${Date.now()}`
+        : url
+
+      const feed = await parser.parseURL(urlWithTimestamp)
       return feed as T
     } catch (error) {
       lastError = error instanceof Error ? error : new Error(String(error))
