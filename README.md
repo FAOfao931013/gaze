@@ -71,17 +71,67 @@ Common schedules:
 
 Learn more about cron syntax at [crontab.guru](https://crontab.guru/).
 
-## Widget System
+## Configuration
 
-The dashboard uses a **widget-based architecture** where each widget fetches its own data during build:
+Configure your dashboard in [src/config/gaze.ts](src/config/gaze.ts) using a declarative, type-safe approach.
 
-1. Widgets are defined in `src/widgets/` directory
-2. Each widget has a `fetcher.ts` that runs during build
-3. Add environment variables to `.env` for API keys
-4. Widget data is fetched in parallel (max 10 concurrent requests)
-5. Failed widgets show error state instead of breaking the build
+### Quick Example
 
-See [src/widgets/README.md](src/widgets/README.md) for detailed guide on creating widgets.
+```typescript
+export const gazeConfig = {
+  pages: [
+    {
+      name: 'Home',
+      width: 'wide',
+      columns: [
+        {
+          size: 'small',
+          widgets: [
+            { type: 'weather', location: 'Shanghai' }
+          ]
+        },
+        {
+          size: 'full',
+          widgets: [
+            { type: 'hacker-news', limit: 15 }
+          ]
+        }
+      ]
+    }
+  ]
+} satisfies GazeConfig
+```
+
+### Documentation
+
+📖 **[Configuration Guide (CONFIG.md)](CONFIG.md)** - Complete guide covering:
+- Page layouts and column structures
+- All available widgets with parameters
+- Data structures and type definitions
+- Complete examples and best practices
+
+🔧 **[Widget Development (src/widgets/README.md)](src/widgets/README.md)** - Learn how to create custom widgets
+
+### Available Widgets
+
+**Layout Widgets**:
+- [Group](CONFIG.md#group-widget) - Display widgets with tab navigation
+- [Split Column](CONFIG.md#split-column-widget) - Place widgets side-by-side
+
+**Content Widgets**:
+- [Weather](CONFIG.md#weather-widget) - Current weather & 24-hour forecast
+- [RSS](CONFIG.md#rss-widget) - RSS/Atom feed reader
+- [YouTube](CONFIG.md#youtube-widget) - Recent videos from channels
+- [Hacker News](CONFIG.md#hacker-news-widget) - Top stories from HN
+- [Lobsters](CONFIG.md#lobsters-widget) - Posts from Lobsters community
+
+### Architecture
+
+The dashboard uses a **pure SSG (Static Site Generator) architecture**:
+- ✅ All data fetched during build time (`bun run build` or `bun run dev`)
+- ✅ Zero runtime fetch - no client-side API calls
+- ✅ Parallel widget data fetching (max 10 concurrent)
+- ✅ Graceful error handling - failed widgets show error state
 
 ## Project Structure
 
@@ -120,19 +170,6 @@ bun run format
 # Check and fix
 bun run check
 ```
-
-## Environment Variables
-
-If your widgets require API keys, create a `.env` file (copy from `.env.example`):
-
-```bash
-# Weather widget
-OPEN_METEO_API_KEY=your_api_key_here
-
-# Add more as needed
-```
-
-For CI/CD, add these as secrets in your repository settings (Settings → Secrets and variables → Actions).
 
 ## Use as Browser New Tab Page
 
