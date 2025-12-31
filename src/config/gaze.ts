@@ -91,8 +91,8 @@ export const gazeConfig = {
               widgets: [
                 {
                   type: 'rss',
-                  title: 'arXiv CS.AI',
-                  feedUrl: 'https://rss.arxiv.org/rss/cs.AI',
+                  title: 'Anthropic Engineering Blog',
+                  feedUrl: 'https://rss.app/feeds/ABWCP8rMAV5PAwdZ.xml',
                   limit: 15,
                   style: 'detailed-list',
                   collapseAfter: 5,
