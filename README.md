@@ -1,8 +1,16 @@
-# Gaze Dashboard
+<div align="center">
+  <img src="logo.png" alt="Gaze Logo" width="200" />
+  <h1>Gaze</h1>
+  <p>
+    <a href="#deployment">Deployment</a> ·
+    <a href="CONFIG.md">Configuration</a>
+  </p>
+  <p>
+  A Glance-like SSG (Static Site Generator) Dashboard built with Astro, React, and Tailwind CSS v4.
+  </p>
+</div>
 
-A Glance-like SSG (Static Site Generator) Dashboard built with Astro, React, and Tailwind CSS v4.
-
-![Gaze Dashboard Screenshot](screenshot.png)
+![Gaze Dashboard Screenshot](screenshot-2025-12-31.png)
 
 ## Architecture
 
